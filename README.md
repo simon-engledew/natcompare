@@ -1,4 +1,4 @@
-A basic natural comparison function for Go.
+A basic (zero-dependency) natural comparison function for Go.
 
 ```go
 package main

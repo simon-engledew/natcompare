@@ -2,14 +2,20 @@ package natcompare_test
 
 import (
 	"github.com/simon-engledew/natcompare"
-	"github.com/stretchr/testify/require"
 	"sort"
 	"testing"
 )
 
+func assert(t *testing.T, result bool) {
+	t.Helper()
+	if !result {
+		t.FailNow()
+	}
+}
+
 func TestCompare(t *testing.T) {
-	require.True(t, natcompare.Less("100E", "200E"))
-	require.True(t, natcompare.Less("200E", "1000E"))
+	assert(t, natcompare.Less("100E", "200E"))
+	assert(t, natcompare.Less("200E", "1000E"))
 }
 
 func less(values []string) func(i, j int) bool {
@@ -20,13 +26,13 @@ func less(values []string) func(i, j int) bool {
 
 func TestSort(t *testing.T) {
 	values := []string{"a", "a0", "a1", "a1a", "a1b", "a2", "a10", "a20"}
-	require.True(t, sort.SliceIsSorted(values, less(values)))
+	assert(t, sort.SliceIsSorted(values, less(values)))
 
 	values = []string{"1000 A", "A", "B"}
-	require.True(t, sort.SliceIsSorted(values, less(values)))
+	assert(t, sort.SliceIsSorted(values, less(values)))
 
 	values = []string{"a1.txt", "a2.txt", "a20.txt"}
-	require.True(t, sort.SliceIsSorted(values, less(values)))
+	assert(t, sort.SliceIsSorted(values, less(values)))
 
 	values = []string{
 		"1-02",
@@ -59,7 +65,7 @@ func TestSort(t *testing.T) {
 		"x2-y08",
 		"x8-y8",
 	}
-	require.True(t, sort.SliceIsSorted(values, less(values)))
+	assert(t, sort.SliceIsSorted(values, less(values)))
 
 	values = []string{
 		"1999-3-3",
@@ -68,5 +74,5 @@ func TestSort(t *testing.T) {
 		"2000-1-10",
 		"2000-3-23",
 	}
-	require.True(t, sort.SliceIsSorted(values, less(values)))
+	assert(t, sort.SliceIsSorted(values, less(values)))
 }
